@@ -1,0 +1,9 @@
+---
+-name: This playbook will create a file.
+ hosts: web
+ become: true
+ tasks:
+   - name: Create a File
+     file:
+       path: /home/pratham/newfile.txt
+       state: touch
