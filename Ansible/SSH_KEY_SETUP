@@ -1,0 +1,21 @@
+ssh <ip-address>  <br>
+yes
+exit
+
+
+//Generate a new key
+ssh-keygen -C "TEXT_IN KEY"
+or
+ssh-keygen -t <keytype> -C "TEXT_IN_KEY"
+cd ~/.ssh
+ls -l 
+//all keys wil be available here.
+
+
+//copying our new key to the server
+ssh-copy-id -i ~/.ssh/ansible.pub  <ip-address>
+
+
+//login using the key without password
+ssh -i ~/.ssh/ansible <ip-address>
+
