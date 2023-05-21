@@ -1,0 +1,2 @@
+sudo apt-get install docker.io
+sudo chown $USER /var/run/docker.sock
