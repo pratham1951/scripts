@@ -1,0 +1,2 @@
+prefix = "dev"
+location = "eastus"
