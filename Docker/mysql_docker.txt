@@ -1,0 +1,8 @@
+docker pull mysql
+docker run -p 3306:3306 --name some-mysql -e MYSQL_ROOT_PASSWORD=admin -d mysql
+docker exec -it some-mysql /bin/bash
+mysql uroot -p -A
+
+-----Setup Outside docker Container-------
+sudo apt install mysql-client-core-8.0
+mysql -uroot -p -P3307 -h127.0.0.1
