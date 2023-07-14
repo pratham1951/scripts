@@ -1,0 +1,8 @@
+kubectl get pods
+kubectl apply -f tomcat.yml
+
+kubectl port-forward service/<service-name> <port-of-hostmachine>:<port-number-service>
+
+kubectl exec -it tomcat-deployment-nautilus-8555c5bfcc-klbqv  -c tomcat-container-nautilus --/bin/bash
+
+kubectl delete -f tomcat.yml
