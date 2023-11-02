@@ -3,6 +3,13 @@ resource "azurerm_resource_group" "pratham" {
   name     = "pratham"
   location = var.location
 }
+
+resource "azurerm_public_ip" "Public_IP" {
+  name                = "myPublicIP"
+  location            = azurerm_resource_group.pratham.location
+  resource_group_name = azurerm_resource_group.pratham.name
+  allocation_method   = "Dynamic"
+}
 #virtual network
 resource "azurerm_virtual_network" "pratham-vnet" {
   name                = "pratham-network"
@@ -28,6 +35,7 @@ resource "azurerm_network_interface" "pratham-main" {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.pratham-subnet.id
     private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          =  azurerm_public_ip.Public_IP.id
   }
 }
 #Security Group
