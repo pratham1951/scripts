@@ -57,39 +57,45 @@ resource "azurerm_network_security_group" "pratham-nsg" {
   }
 }
 
-resource "azurerm_virtual_machine" "pratham" {
-
-  name                  = "pratham-machine"
+resource "azurerm_linux_virtual_machine" "snipeit_vm" {
+  name                  = "Pratham"
   location              = azurerm_resource_group.pratham.location
   resource_group_name   = azurerm_resource_group.pratham.name
   network_interface_ids = [azurerm_network_interface.pratham-main.id]
-  vm_size               = "Standard_B1s"
- 
-  storage_os_disk {
-    name              = "pratham-osdisk1"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
+  size                  = "Standard_B1s"
+
+  // Virtual Machine Disk Details
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
   }
- # Uncomment this line to delete the OS disk automatically when deleting the VM
-  delete_os_disk_on_termination = true
 
- # Uncomment this line to delete the data disks automatically when deleting the VM
-  delete_data_disks_on_termination = true
-
-  storage_image_reference {
+  // Virtual Machine Image Details
+  source_image_reference {
     publisher = "Canonical"
     offer     = "0001-com-ubuntu-server-jammy"
-    sku       = "22_04-lts-gen2"
+    sku       = "22_04-lts"
     version   = "latest"
   }
-  os_profile {
-    computer_name  = "hostname"
-    admin_username      = var.admin_username
-    admin_password      = var.admin_password
+
+  computer_name                   = "snipeit"
+  admin_username                  = var.admin_username
+  disable_password_authentication = true
+  admin_ssh_key {
+    username   = var.admin_username
+    public_key = file("~/.ssh//snipe-it-key.pub")
   }
-   os_profile_linux_config {
-    disable_password_authentication = false
+
+  connection {
+    type        = "ssh"
+    user        = var.admin_username        # SSH username for the VM
+    private_key = file("~/.ssh//snipe-it-key") # SSH private key file
+    host        = self.public_ip_address
   }
-  
+
+   provisioner "remote-exec" {
+    inline = [
+      "sudo ./install-snipe-it.sh"
+    ]
+  }
 }
