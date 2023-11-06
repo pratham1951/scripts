@@ -44,7 +44,7 @@ sudo chown -R www-data:www-data /var/www/snipe-it
 sudo chmod -R 755 /var/www/snipe-it
 
 # COMPOSER_ALLOW_SUPERUSER=1 sudo composer update --no-plugins --no-scripts
-COMPOSER_ALLOW_SUPERUSER=1 sudo composer install --no-dev --prefer-source --no-plugins --no-scripts
+COMPOSER_ALLOW_SUPERUSER=1 yes | sudo composer install --no-dev --prefer-source --no-plugins --no-scripts
 
 yes | sudo php artisan key:generate
 

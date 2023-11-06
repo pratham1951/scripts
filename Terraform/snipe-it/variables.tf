@@ -13,10 +13,10 @@ variable "admin_username" {
   type        = string
 }
 
-variable "admin_password" {
-  description = "Password for the VM."
-  type        = string
-}
+# variable "admin_password" {
+#   description = "Password for the VM."
+#   type        = string
+# }
   
 # variable "client_id" {
 #   type = string
