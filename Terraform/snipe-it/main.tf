@@ -57,7 +57,7 @@ resource "azurerm_network_security_group" "pratham-nsg" {
   }
 }
 
-resource "azurerm_linux_virtual_machine" "snipeit_vm" {
+resource "azurerm_linux_virtual_machine" "Pratham" {
   name                  = "Pratham"
   location              = azurerm_resource_group.pratham.location
   resource_group_name   = azurerm_resource_group.pratham.name
@@ -92,10 +92,21 @@ resource "azurerm_linux_virtual_machine" "snipeit_vm" {
     private_key = file("~/.ssh//snipe-it-key") # SSH private key file
     host        = self.public_ip_address
   }
+   // Copying file from our local machine to Azure VM
+  provisioner "file" {
+    source      = "./install-snipe-it.sh"
+    destination = "/home/ubuntu/install-snipe-it.sh"
+  }
 
    provisioner "remote-exec" {
     inline = [
-      "sudo ./install-snipe-it.sh"
+      "sudo chmod 755 /home/ubuntu/install-snipe-it.sh",
+      "cd /home/ubuntu/",
+      "sudo apt update",
+      "sudo apt install dos2unix -y",
+      "dos2unix install-snipe-it.sh",
+      "sudo apt purge dos2unix -y",
+      "sudo ./install-snipe-it.sh",
     ]
   }
 }

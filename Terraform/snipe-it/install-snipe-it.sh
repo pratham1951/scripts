@@ -3,7 +3,7 @@ DB_USER="snipeituser"
 DB_PASS="root"
 DB_NAME="snipeitdb" 
 
-sudo apt update -y && sudo apt upgrade -y
+sudo apt update -y 
 sudo apt install apache2 -y
 sudo apt install mariadb-server mariadb-client -y
 sudo systemctl start apache2 
