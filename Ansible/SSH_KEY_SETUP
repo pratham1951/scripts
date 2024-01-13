@@ -12,8 +12,13 @@ ls -l
 //all keys wil be available here.
 
 
-//copying our new key to the server
+//copying our new key to the server with password
 ssh-copy-id -i ~/.ssh/ansible.pub  <ip-address>
+
+//copying our new key to the server with key
+
+chmod 600 <server-key.pem>
+ssh-copy-id -f -i ~/.ssh/servers.pub -o StrictHostKeyChecking=no -o "IdentityFile ~/.ssh/ubuntu-key-pair-1.pem" <ip-address>
 
 
 //login using the key without password
